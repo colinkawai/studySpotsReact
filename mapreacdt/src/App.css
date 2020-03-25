@@ -1,0 +1,36 @@
+.Container,
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-right: 0px;
+  margin-left: 0px;
+  width: 100vw;
+}
+
+.mapListContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100vw;
+  height: 100vh;
+}
+
+.map {
+  flex: 1;
+  position: relative;
+  max-width: 65%;
+  height: 100vh;
+}
+
+.ViewList {
+  flex-basis: 35%;
+  margin-left: 10px;
+  overflow: scroll;
+  height: 100vh;
+}

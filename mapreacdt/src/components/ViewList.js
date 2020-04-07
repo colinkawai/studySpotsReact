@@ -3,13 +3,14 @@ import ReactDOM from "react-dom";
 import { render } from "@testing-library/react";
 import "../App.css";
 import ReviewModal from "./ReviewModal";
+import FilterList from "./FilterList";
 import WriteReviewModal from "./WriteReviewModal";
 import axios from "axios";
 
 export class ViewList extends Component {
   constructor(props) {
     super(props);
-
+    this.filterPlaces = this.filterPlaces.bind(this);
     this.state = {
       elements: []
     };
@@ -76,10 +77,15 @@ export class ViewList extends Component {
     this.setState({ elements: newArray });
   }
 
+  filterPlaces(seating, comfort, speed, noise, outlet) {
+    let filterArray = [seating, comfort, speed, noise, outlet];
+    this.props.onFilter(filterArray);
+  }
+
   render() {
     return (
       <div className={this.props.className} id={this.props.id}>
-        <h1> Study Spots </h1>
+        <FilterList onFilter={this.filterPlaces} />
         <ol>{this.state.elements}</ol>
       </div>
     );

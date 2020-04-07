@@ -67,26 +67,27 @@ export class MapContainer extends Component {
     // loaded prop is from the GoogleApiComponent
     return (
       //getting a reference to a google object
-
-      <Map
-        centerAroundCurrentLocation
-        google={this.props.google}
-        style={{ width: "100%", height: "100%", position: "relative" }}
-        className={"map"}
-        zoom={14}
-        onClick={this.onMapClicked}
-        onDragend={this.centerMoved}
-        onLocationChange={this.locationChange}
-      >
-        {elements}
-        <InfoWindow marker={activeMarker} visible={showingInfoWindow}>
-          <div>
-            <h1>{selectedPlace.name}</h1>
-            <h2>{selectedPlace.ratings}/5</h2>
-            <h3>{selectedPlace.addresses}</h3>
-          </div>
-        </InfoWindow>
-      </Map>
+      <div>
+        <Map
+          centerAroundCurrentLocation
+          google={this.props.google}
+          style={{ width: "100%", height: "100%", position: "relative" }}
+          className={"map"}
+          zoom={14}
+          onClick={this.onMapClicked}
+          onDragend={this.centerMoved}
+          onLocationChange={this.locationChange}
+        >
+          {elements}
+          <InfoWindow marker={activeMarker} visible={showingInfoWindow}>
+            <div>
+              <h1>{selectedPlace.name}</h1>
+              <h2>Yelp Rating: {selectedPlace.ratings}/5</h2>
+              <h3>{selectedPlace.addresses}</h3>
+            </div>
+          </InfoWindow>
+        </Map>
+      </div>
     );
   }
 }

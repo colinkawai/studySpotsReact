@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+
 import "../App.css";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import StarRatingComponent from "react-star-rating-component";
@@ -8,23 +8,53 @@ const ReviewModal = props => {
   const { buttonLabel, className } = props;
   const names = props.names;
   const ratings = props.ratings;
-  const [modal, setModal] = useState(false);
   const placeID = props.placeID;
-  const ratingElement = [];
+  // these constants are used to for the ratings after db call
+  const [seating, setSeating] = useState(0);
+  const [comfort, setComfort] = useState(0);
+  const [speed, setSpeed] = useState(0);
+  const [noise, setNoise] = useState(0);
+  const [outlet, setOutlet] = useState(0);
+
+  const [hours, setHours] = useState(false);
+  const [phone, setPhone] = useState("");
+
+  const [modal, setModal] = useState(false);
+
   const toggle = () => setModal(!modal);
 
+  const getString = "http://localhost:3001/api/getDataAverage/" + placeID;
   const getDataFromDb = () => {
     axios
-      .get("http://localhost:3001/api/getData", {
-        params: {
-          placeID: placeID
-        }
-      })
+      .get(getString)
       .then(res => {
-        console.log(res);
+        setSeating(res.data.data[0].averageSeatRating);
+        setComfort(res.data.data[0].averageComfortRating);
+        setSpeed(res.data.data[0].averageInternetRating);
+        setNoise(res.data.data[0].averageNoiseRating);
+        setOutlet(res.data.data[0].averageOutletRating);
       })
       .catch(err => {
         console.log(err);
+      });
+  };
+
+  const getPlaceInfo = () => {
+    axios
+      .get(
+        `${"https://cors-anywhere.herokuapp.com/"}https://api.yelp.com/v3/businesses/${placeID}`,
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
+          }
+        }
+      )
+      .then(res => {
+        setHours(res.data.hours[0].is_open_now);
+        setPhone(res.data.display_phone);
+      })
+      .catch(err => {
+        console.log(err.res);
       });
   };
 
@@ -34,6 +64,7 @@ const ReviewModal = props => {
         color="danger"
         onClick={() => {
           getDataFromDb();
+          getPlaceInfo();
           toggle();
         }}
       >
@@ -49,11 +80,40 @@ const ReviewModal = props => {
           reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
           pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
           culpa qui officia deserunt mollit anim id est laborum.
+          <div> Seating</div>
           <StarRatingComponent
-            name={names}
+            name={"Seating"}
             editing={false}
             starCount={5}
-            value={ratings}
+            value={seating}
+          />
+          <div> Seat Comfort</div>
+          <StarRatingComponent
+            name={"Comfort"}
+            editing={false}
+            starCount={5}
+            value={comfort}
+          />
+          <div> Internet Rating</div>
+          <StarRatingComponent
+            name={"Internet Speed"}
+            editing={false}
+            starCount={5}
+            value={speed}
+          />
+          <div> Noise Level </div>
+          <StarRatingComponent
+            name={"Noise"}
+            editing={false}
+            starCount={5}
+            value={noise}
+          />
+          <div> Outlet Availability </div>
+          <StarRatingComponent
+            name={"Outlet Availability"}
+            editing={false}
+            starCount={5}
+            value={outlet}
           />
         </ModalBody>
         <ModalFooter>

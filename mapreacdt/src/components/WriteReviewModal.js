@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+
 import "../App.css";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import StarRatingComponent from "react-star-rating-component";
@@ -50,7 +50,6 @@ const WriteReviewModal = props => {
           reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
           pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
           culpa qui officia deserunt mollit anim id est laborum.
-          <div>Rating in State: {rating}</div>
           <div>Seating</div>
           <StarRatingComponent
             name={names}
@@ -100,7 +99,7 @@ const WriteReviewModal = props => {
               toggle();
             }}
           >
-            Do Something
+            Submit
           </Button>
           <Button color="secondary" onClick={toggle}>
             Cancel

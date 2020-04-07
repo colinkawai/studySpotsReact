@@ -4,6 +4,7 @@ var cors = require("cors");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const Data = require("./data");
+const DataTwo = require("./dataTwo");
 
 const API_PORT = 3001;
 const app = express();
@@ -34,10 +35,48 @@ app.use(logger("dev"));
 // this method fetches all available data in our database
 //return calculated array
 router.get("/getData/:placeID", (req, res) => {
-  Data.find((err, data) => {
+  Data.find({ placeID: req.params.placeID }, (err, data) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
   });
+});
+
+// returns the existing average data
+router.get("/getDataAverage/:placeID", (req, res) => {
+  Data.aggregate(
+    [
+      {
+        $match: {
+          placeID: req.params.placeID
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          averageSeatRating: {
+            $avg: "$seatRating"
+          },
+          averageComfortRating: {
+            $avg: "$comfortRating"
+          },
+          averageInternetRating: {
+            $avg: "$internetRating"
+          },
+          averageNoiseRating: {
+            $avg: "$noiseRating"
+          },
+          averageOutletRating: {
+            $avg: "$outletRating"
+          }
+        }
+      }
+    ],
+    function(err, data) {
+      if (err) return res.json({ success: false, error: err });
+
+      return res.json({ success: true, data: data });
+    }
+  );
 });
 
 // this is our update method

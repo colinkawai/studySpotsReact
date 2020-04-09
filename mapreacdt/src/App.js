@@ -99,7 +99,8 @@ export class Container extends React.Component {
     let filteredArray = await this.filterPlaces(filterArray, paramArray);
     let removedArray = await this.removePlaces(filteredArray, paramArray);
     console.log(removedArray);
-    this.filterFinal(removedArray);
+    let returned = await this.filterFinal(removedArray);
+    console.log(returned);
   };
 
   getMapInfo = filterArray => {
@@ -171,27 +172,31 @@ export class Container extends React.Component {
   };
 
   filterFinal = removedArray => {
-    let placeIDArr = removedArray[0];
-    let locationsArr = removedArray[1];
-    let namesArr = removedArray[2];
-    let ratingsArr = removedArray[3];
-    let addressesArr = removedArray[4];
+    return new Promise((resolve, reject) => {
+      let placeIDArr = removedArray[0];
+      let locationsArr = removedArray[1];
+      let namesArr = removedArray[2];
+      let ratingsArr = removedArray[3];
+      let addressesArr = removedArray[4];
 
-    this.setState({
-      placeID: placeIDArr,
-      locations: locationsArr,
-      names: namesArr,
-      ratings: ratingsArr,
-      addresses: addressesArr
+      this.setState({
+        placeID: placeIDArr,
+        locations: locationsArr,
+        names: namesArr,
+        ratings: ratingsArr,
+        addresses: addressesArr
+      });
+      resolve("great success");
     });
   };
   filterPlaces = (filterArray, paramArray) => {
     // have viewList send the filters in an array
     // get request to the database and put the list of placeIDs in a list that excludes those places
     // update the state
+
     return new Promise((resolve, reject) => {
       var placeIDArr = paramArray[0];
-
+      var resolveLimit = placeIDArr.length - 1;
       var removeArray = [];
       for (let i = 0; i < placeIDArr.length; i++) {
         const getString =
@@ -215,11 +220,14 @@ export class Container extends React.Component {
             }
           })
 
+          .then(() => {
+            resolve(removeArray);
+          })
+
           .catch(err => {
             console.log(err);
           });
       }
-      resolve(removeArray);
     });
   };
 
@@ -234,7 +242,7 @@ export class Container extends React.Component {
 
       let i = removeArray.length;
       console.log(removeArray);
-      console.log(i);
+
       while (i--) {
         console.log("here");
         locationArrayCopy.splice(removeArray[i], 1);

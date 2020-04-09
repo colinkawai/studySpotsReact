@@ -5,8 +5,9 @@ const bodyParser = require("body-parser");
 const logger = require("morgan");
 const Data = require("./data");
 const DataTwo = require("./dataTwo");
+require("dotenv").config();
 
-const API_PORT = 3001;
+const API_PORT = process.env.PORT || 3001;
 const app = express();
 app.use(cors());
 const router = express.Router();
@@ -16,7 +17,7 @@ const dbRoute =
   "mongodb+srv://Colin_Kawai:Twinturbo123@cluster0-p8ar4.mongodb.net/reviews?retryWrites=true";
 
 // connects our back end code with the database
-mongoose.connect(dbRoute, { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 
 let db = mongoose.connection;
 
@@ -47,31 +48,31 @@ router.get("/getDataAverage/:placeID", (req, res) => {
     [
       {
         $match: {
-          placeID: req.params.placeID
-        }
+          placeID: req.params.placeID,
+        },
       },
       {
         $group: {
           _id: null,
           averageSeatRating: {
-            $avg: "$seatRating"
+            $avg: "$seatRating",
           },
           averageComfortRating: {
-            $avg: "$comfortRating"
+            $avg: "$comfortRating",
           },
           averageInternetRating: {
-            $avg: "$internetRating"
+            $avg: "$internetRating",
           },
           averageNoiseRating: {
-            $avg: "$noiseRating"
+            $avg: "$noiseRating",
           },
           averageOutletRating: {
-            $avg: "$outletRating"
-          }
-        }
-      }
+            $avg: "$outletRating",
+          },
+        },
+      },
     ],
-    function(err, data) {
+    function (err, data) {
       if (err) return res.json({ success: false, error: err });
 
       return res.json({ success: true, data: data });
@@ -83,7 +84,7 @@ router.get("/getDataAverage/:placeID", (req, res) => {
 // this method overwrites existing data in our database
 router.post("/updateData", (req, res) => {
   const { id, update } = req.body;
-  Data.findByIdAndUpdate(id, update, err => {
+  Data.findByIdAndUpdate(id, update, (err) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
   });
@@ -93,7 +94,7 @@ router.post("/updateData", (req, res) => {
 // this method removes existing data in our database
 router.delete("/deleteData", (req, res) => {
   const { id } = req.body;
-  Data.findByIdAndRemove(id, err => {
+  Data.findByIdAndRemove(id, (err) => {
     if (err) return res.send(err);
     return res.json({ success: true });
   });
@@ -111,7 +112,7 @@ router.post("/putData", (req, res) => {
     comfortRating,
     internetRating,
     noiseRating,
-    outletRating
+    outletRating,
   } = req.body;
 
   if (
@@ -124,7 +125,7 @@ router.post("/putData", (req, res) => {
   ) {
     return res.json({
       success: false,
-      error: "INVALID INPUTS"
+      error: "INVALID INPUTS",
     });
   }
   data.placeID = placeID;
@@ -134,7 +135,7 @@ router.post("/putData", (req, res) => {
   data.noiseRating = noiseRating;
   data.outletRating = outletRating;
 
-  data.save(err => {
+  data.save((err) => {
     if (err) return res.json({ success: false, error: err });
 
     return res.json({ success: true });

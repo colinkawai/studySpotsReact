@@ -28,7 +28,7 @@ db.once("open", () => console.log("connected to the database"));
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("../mapreacdt/build"));
+  app.use(express.static(__dirname + "../mapreacdt/build"));
 }
 // (optional) only made for logging and
 // bodyParser, parses the request body to be a readable json format
@@ -159,3 +159,6 @@ app.use("/api", router);
 
 // launch our backend into a port
 app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
+
+module.exports = app;
+module.exports = router;

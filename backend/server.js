@@ -27,7 +27,7 @@ db.once("open", () => console.log("connected to the database"));
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(__dirname + "/mapreacdt"));
+  app.use(express.static(__dirname + "../mapreacdt"));
 }
 // (optional) only made for logging and
 // bodyParser, parses the request body to be a readable json format
@@ -36,7 +36,7 @@ app.use(bodyParser.json());
 app.use(logger("dev"));
 
 app.get("*", (request, response) => {
-  response.sendFile(path.join(__dirname, "/mapreacdt", "index.html"));
+  response.sendFile(path.join(__dirname, "../mapreacdt/public", "index.html"));
 });
 
 // this is our get method

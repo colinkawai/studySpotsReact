@@ -4,6 +4,7 @@ var cors = require("cors");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const Data = require("./data");
+const path = require("path");
 const DataTwo = require("./dataTwo");
 require("dotenv").config();
 
@@ -27,7 +28,7 @@ db.once("open", () => console.log("connected to the database"));
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(__dirname + "../mapreacdt"));
+  app.use(express.static(__dirname + "../mapreacdt/public"));
 }
 // (optional) only made for logging and
 // bodyParser, parses the request body to be a readable json format

@@ -37,7 +37,7 @@ app.use(bodyParser.json());
 app.use(logger("dev"));
 
 app.get("*", (request, response) => {
-  response.sendFile(path.join(__dirname, "../mapreacdt/public", "index.html"));
+  response.sendFile(path.join(__dirname, "../mapreacdt/public", "index.js"));
 });
 
 // this is our get method

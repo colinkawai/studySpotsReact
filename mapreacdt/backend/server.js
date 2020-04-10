@@ -30,7 +30,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("/mapreacdt/build"));
   app.get("*", (req, res) => {
-    res.sendFile("index.html", { root: "/mapreacdt/build/" });
+    res.sendFile(path.resolve("/mapreacdt/build/", "index.html"));
   });
 }
 // (optional) only made for logging and

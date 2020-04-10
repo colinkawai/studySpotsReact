@@ -36,10 +36,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger("dev"));
 
-app.get("*", (request, response) => {
-  response.sendFile(
-    path.join(__dirname, "../mapreacdt", "build", "index.html")
-  );
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../mapreacdt", "build", "index.html"));
 });
 
 router.get("/", (req, res) => {

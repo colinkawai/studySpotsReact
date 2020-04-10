@@ -29,16 +29,15 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(__dirname, "../mapreacdt/build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../mapreacdt", "build", "index.html"));
+  });
 }
 // (optional) only made for logging and
 // bodyParser, parses the request body to be a readable json format
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger("dev"));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../mapreacdt", "build", "index.html"));
-});
 
 router.get("/", (req, res) => {
   res.send("hello world");

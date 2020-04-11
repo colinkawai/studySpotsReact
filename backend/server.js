@@ -28,9 +28,11 @@ db.once("open", () => console.log("connected to the database"));
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("/mapreacdt/build/"));
+  app.use(
+    express.static(path.join(__dirname, "../mapreacdt/build/index.html"))
+  );
   app.get("*", (req, res) => {
-    res.sendFile("index.html", { root: "/mapreacdt/build/" });
+    res.sendFile(path.join(__dirname + "../mapreacdt/build/index.html"));
   });
 }
 // (optional) only made for logging and

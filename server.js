@@ -10,7 +10,7 @@ require("dotenv").config();
 
 const API_PORT = process.env.PORT || 3001;
 const app = express();
-app.use(cors());
+//app.use(cors());
 const router = express.Router();
 
 // this is our MongoDB database
@@ -28,7 +28,6 @@ db.once("open", () => console.log("connected to the database"));
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 app.use(express.static(path.join(__dirname, "mapreacdt", "build")));
-
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "mapreacdt", "build", "index.html"));
 });

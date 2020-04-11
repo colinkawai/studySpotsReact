@@ -27,11 +27,12 @@ db.once("open", () => console.log("connected to the database"));
 // checks if connection with the database is successful
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
-app.use("*", express.static(path.join(__dirname, "mapreacdt/build/")));
+app.use("*", express.static(path.join(__dirname, "mapreacdt", "build")));
+/*
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "mapreacdt", "build", "index.html"));
 });
-
+*/
 // (optional) only made for logging and
 // bodyParser, parses the request body to be a readable json format
 app.use(bodyParser.urlencoded({ extended: false }));

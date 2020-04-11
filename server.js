@@ -30,7 +30,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 app.use(express.static(path.join(__dirname, "mapreacdt", "build")));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "mapreacdt", "build", "index.html"));
+  res.sendFile(path.resolve(__dirname, "mapreacdt", "build", "index.html"));
 });
 
 // (optional) only made for logging and

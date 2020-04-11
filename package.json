@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd mapreacdt && npm install --prefix mapreacdt && npm run build --prefix mapreacdt"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd mapreacdt && npm install && npm run build"
   },
   "engines": {
     "node": "12.10.x",

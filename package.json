@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node server.js && cd backend && npm install",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd mapreacdt && npm install && npm run build"
   },
   "engines": {

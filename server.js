@@ -32,9 +32,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger("dev"));
 
-app.use(express.static(path.join(__dirname, "mapreacdt", "build")));
+app.use(express.static(path.join(__dirname, "client", "build")));
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "mapreacdt", "build", "index.html"));
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 });
 
 router.get("/", (req, res) => {

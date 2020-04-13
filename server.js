@@ -32,11 +32,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger("dev"));
 
-app.use("/", express.static(path.join(__dirname, "client", "build")));
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-});
-
 router.get("/", (req, res) => {
   res.send("hello world");
 });
@@ -149,6 +144,11 @@ router.post("/putData", (req, res) => {
     return res.json({ success: true });
   });
   console.log(data);
+});
+
+app.use("/", express.static(path.join(__dirname, "client", "build")));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 });
 
 // append /api for our http requests

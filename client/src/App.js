@@ -42,11 +42,17 @@ export class App extends React.Component {
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.filterPlaces = this.filterPlaces.bind(this);
     this.removePlaces = this.removePlaces.bind(this);
+    this.connectToServer = this.connectToServer.bind(this);
   }
 
   componentDidMount() {
     this.targetElement = document.querySelector("#listView");
     disableBodyScroll(this.targetElement);
+    this.connectToServer();
+  }
+
+  connectToServer() {
+    fetch("/");
   }
 
   onMarkerClick = (props, marker, e) => {

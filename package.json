@@ -6,10 +6,11 @@
   "scripts": {
     "client-install": "npm install --prefix client",
     "start": "node server.js",
+    "server": "nodemon index.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "build": "concurrently \"cd client && npm run build\" \"npm build \"",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client"
   },
   "engines": {
     "node": "12.10.x",

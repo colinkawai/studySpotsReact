@@ -7,11 +7,11 @@ import "./App.css";
 import {
   disableBodyScroll,
   enableBodyScroll,
-  clearAllBodyScrollLocks
+  clearAllBodyScrollLocks,
 } from "body-scroll-lock";
 import { filter } from "async";
 
-export class Container extends React.Component {
+export class App extends React.Component {
   targetElement = null;
   //modal variabales
 
@@ -32,8 +32,8 @@ export class Container extends React.Component {
       ratings: [],
       currentLocation: {
         lat: "",
-        lng: ""
-      }
+        lng: "",
+      },
     };
 
     this.onMarkerClick = this.onMarkerClick.bind(this);
@@ -53,15 +53,15 @@ export class Container extends React.Component {
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
-      showingInfoWindow: true
+      showingInfoWindow: true,
     });
   };
 
-  handleOnMapClicked = props => {
+  handleOnMapClicked = (props) => {
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
-        activeMarker: null
+        activeMarker: null,
       });
     }
   };
@@ -71,8 +71,8 @@ export class Container extends React.Component {
       {
         currentLocation: {
           lat: map.center.lat(),
-          lng: map.center.lng()
-        }
+          lng: map.center.lng(),
+        },
       },
       () => {
         this.getMapInfo();
@@ -85,8 +85,8 @@ export class Container extends React.Component {
       {
         currentLocation: {
           lat: lat,
-          lng: lng
-        }
+          lng: lng,
+        },
       },
       () => {
         this.getMapInfo();
@@ -94,7 +94,7 @@ export class Container extends React.Component {
     );
   }
 
-  handleFilters = async filterArray => {
+  handleFilters = async (filterArray) => {
     let paramArray = await this.getMapInfo(filterArray);
     let filteredArray = await this.filterPlaces(filterArray, paramArray);
     let removedArray = await this.removePlaces(filteredArray, paramArray);
@@ -103,7 +103,7 @@ export class Container extends React.Component {
     console.log(returned);
   };
 
-  getMapInfo = filterArray => {
+  getMapInfo = (filterArray) => {
     return new Promise((resolve, reject) => {
       var paramArray = [];
       var locationArr = [];
@@ -116,18 +116,18 @@ export class Container extends React.Component {
           `${"https://cors-anywhere.herokuapp.com/"}https://api.yelp.com/v3/businesses/search?`,
           {
             headers: {
-              Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
+              Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
             },
             params: {
               categories: "coffee, libraries",
               latitude: this.state.currentLocation.lat,
               longitude: this.state.currentLocation.lng,
-              limit: 20
-            }
+              limit: 20,
+            },
           }
         )
         // set state for locations, names
-        .then(res => {
+        .then((res) => {
           for (var key in res.data.businesses) {
             var addressesBase = res.data.businesses[key].location;
 
@@ -152,7 +152,7 @@ export class Container extends React.Component {
               locations: locationArr,
               names: namesArr,
               ratings: ratingsArr,
-              addresses: addressesArr
+              addresses: addressesArr,
             });
           }
 
@@ -166,12 +166,12 @@ export class Container extends React.Component {
             resolve(paramArray);
           }
         });
-    }).catch(err => {
+    }).catch((err) => {
       console.log("Yelp API call error");
     });
   };
 
-  filterFinal = removedArray => {
+  filterFinal = (removedArray) => {
     return new Promise((resolve, reject) => {
       let placeIDArr = removedArray[0];
       let locationsArr = removedArray[1];
@@ -184,7 +184,7 @@ export class Container extends React.Component {
         locations: locationsArr,
         names: namesArr,
         ratings: ratingsArr,
-        addresses: addressesArr
+        addresses: addressesArr,
       });
       resolve("great success");
     });
@@ -203,13 +203,13 @@ export class Container extends React.Component {
           "http://localhost:3001/api/getDataAverage/" + placeIDArr[i];
         axios
           .get(getString)
-          .then(res => {
+          .then((res) => {
             let resArray = [
               res.data.data[0].averageSeatRating,
               res.data.data[0].averageComfortRating,
               res.data.data[0].averageInternetRating,
               res.data.data[0].averageNoiseRating,
-              res.data.data[0].averageOutletRating
+              res.data.data[0].averageOutletRating,
             ];
             // push the indexes
             for (let j = 0; j < resArray.length; j++) {
@@ -224,7 +224,7 @@ export class Container extends React.Component {
             resolve(removeArray);
           })
 
-          .catch(err => {
+          .catch((err) => {
             console.log(err);
           });
       }
@@ -256,7 +256,7 @@ export class Container extends React.Component {
         locationArrayCopy,
         namesCopy,
         ratingsCopy,
-        addressesCopy
+        addressesCopy,
       ];
       //console.log(returnArray);
 
@@ -310,4 +310,4 @@ export class Container extends React.Component {
   }
 }
 
-export default Container;
+export default App;

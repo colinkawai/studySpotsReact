@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "heroku-postbuild": "cd client && npm install --only=dev && npm intall && npm run build"
+    "start": "concurrently \"node server.js\" \"cd client && npm start\"",
+    "heroku-postbuild": "cd client && npm intall && npm run build"
   },
   "engines": {
     "node": "12.10.x",

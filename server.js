@@ -8,8 +8,9 @@ const path = require("path");
 require("dotenv").config();
 
 const API_PORT = process.env.PORT || 3001;
+
 const app = express();
-//app.use(cors());
+app.use(cors());
 const router = express.Router();
 
 // this is our MongoDB database

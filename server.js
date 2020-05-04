@@ -10,7 +10,7 @@ require("dotenv").config();
 const API_PORT = process.env.PORT || 3001;
 
 const app = express();
-//app.use(cors());
+app.use(cors());
 const router = express.Router();
 
 // this is our MongoDB database
@@ -32,11 +32,6 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger("dev"));
-
-app.use("/", express.static(path.join(__dirname, "client", "build")));
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-});
 
 router.get("/", (req, res) => {
   res.send("hello world");
@@ -154,6 +149,11 @@ router.post("/putData", (req, res) => {
 
 // append /api for our http requests
 app.use("/api", router);
+
+app.use("/", express.static(path.join(__dirname, "client", "build")));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+});
 
 // launch our backend into a port
 app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));

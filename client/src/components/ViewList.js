@@ -12,7 +12,7 @@ export class ViewList extends Component {
     super(props);
     this.filterPlaces = this.filterPlaces.bind(this);
     this.state = {
-      elements: []
+      elements: [],
     };
   }
 
@@ -34,13 +34,13 @@ export class ViewList extends Component {
     rateNoise,
     rateOutlet
   ) => {
-    axios.post("http://localhost:3001/api/putData", {
+    axios.post("/api/putData", {
       placeID: placeID,
       seatRating: rateSeating,
       comfortRating: rateComfort,
       noiseRating: rateNoise,
       internetRating: rateIspeed,
-      outletRating: rateOutlet
+      outletRating: rateOutlet,
     });
   };
 

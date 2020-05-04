@@ -205,8 +205,7 @@ export class App extends React.Component {
       var resolveLimit = placeIDArr.length - 1;
       var removeArray = [];
       for (let i = 0; i < placeIDArr.length; i++) {
-        const getString =
-          "http://localhost:3001/api/getDataAverage/" + placeIDArr[i];
+        const getString = "/api/getDataAverage/" + placeIDArr[i];
         axios
           .get(getString)
           .then((res) => {

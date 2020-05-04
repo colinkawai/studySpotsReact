@@ -4,7 +4,7 @@ import "../App.css";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import StarRatingComponent from "react-star-rating-component";
 import axios from "axios";
-const ReviewModal = props => {
+const ReviewModal = (props) => {
   const { buttonLabel, className } = props;
   const names = props.names;
   const ratings = props.ratings;
@@ -23,18 +23,18 @@ const ReviewModal = props => {
 
   const toggle = () => setModal(!modal);
 
-  const getString = "http://localhost:3001/api/getDataAverage/" + placeID;
+  const getString = "/api/getDataAverage/" + placeID;
   const getDataFromDb = () => {
     axios
       .get(getString)
-      .then(res => {
+      .then((res) => {
         setSeating(res.data.data[0].averageSeatRating);
         setComfort(res.data.data[0].averageComfortRating);
         setSpeed(res.data.data[0].averageInternetRating);
         setNoise(res.data.data[0].averageNoiseRating);
         setOutlet(res.data.data[0].averageOutletRating);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   };
@@ -45,15 +45,15 @@ const ReviewModal = props => {
         `${"https://cors-anywhere.herokuapp.com/"}https://api.yelp.com/v3/businesses/${placeID}`,
         {
           headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
-          }
+            Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+          },
         }
       )
-      .then(res => {
+      .then((res) => {
         setHours(res.data.hours[0].is_open_now);
         setPhone(res.data.display_phone);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err.res);
       });
   };

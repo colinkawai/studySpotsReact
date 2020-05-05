@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const logger = require("morgan");
 const Data = require("./data");
 const path = require("path");
+
 require("dotenv").config();
 
 const API_PORT = process.env.PORT || 3001;
@@ -14,9 +15,6 @@ app.use(cors());
 const router = express.Router();
 
 // this is our MongoDB database
-const dbRoute =
-  "mongodb+srv://Colin_Kawai:Twinturbo123@cluster0-p8ar4.mongodb.net/reviews?retryWrites=true";
-
 // connects our back end code with the database
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 
@@ -32,6 +30,8 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger("dev"));
+
+app.use(express.static(path.join(__dirname, "client", "build")));
 
 router.get("/", (req, res) => {
   res.send("hello world");
@@ -150,11 +150,11 @@ router.post("/putData", (req, res) => {
 // append /api for our http requests
 app.use("/api", router);
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-  });
-}
+//if (process.env.NODE_ENV === "production") {
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+});
+//}
 // launch our backend into a port
 app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));

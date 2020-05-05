@@ -5,11 +5,11 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd client && npm install && npm run build"
+    "heroku-postbuild": " cd client && npm install && npm run build"
   },
   "engines": {
-    "node": ">=10.0.0",
-    "npm": ">=6.0.0"
+    "node": "12.10.0",
+    "npm": "6.14.5"
   },
   "keywords": [],
   "author": "",
@@ -21,10 +21,11 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "http": "0.0.1-security",
     "mongoose": "^5.9.7",
     "morgan": "^1.10.0",
     "path": "^0.12.7",
     "react-async": "^10.0.1"
   },
-  "proxy": "http://localhost:3001"
+  "proxy": "http://localhost:8000"
 }

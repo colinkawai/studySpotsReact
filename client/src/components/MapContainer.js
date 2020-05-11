@@ -21,7 +21,7 @@ export class MapContainer extends Component {
     this.props.onMarkerClick(props, marker, e);
   };
 
-  onMapClicked = props => {
+  onMapClicked = (props) => {
     if (this.props.showingInfoWindow) {
       this.props.onMapClicked();
     }
@@ -57,7 +57,7 @@ export class MapContainer extends Component {
           name={names[i]}
           position={{
             lat: locations[i].latitude,
-            lng: locations[i].longitude
+            lng: locations[i].longitude,
           }}
           addresses={addresses[i]}
           ratings={ratings[i]}
@@ -106,5 +106,5 @@ MapContainer.defaultProps = {
 //Higher Order Component that provides wrapper around Google APIs
 //Can be configured by passing a function that will be called with the wrapped component's props
 export default GoogleApiWrapper({
-  apiKey: "AIzaSyBFUHG2hhGRTX-FTfz3nwMMNPXKHvqGxZ8"
+  apiKey: `${process.env.GOOGLE_KEY}`,
 })(MapContainer);
